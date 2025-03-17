@@ -1,0 +1,7 @@
+__pycache__
+
+# spotipy authentication token
+.cache
+
+# virtual env
+myvenv
