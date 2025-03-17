@@ -1,6 +1,6 @@
 <h1>SPOD: Spotify cover-art display</h1>
 Displaying cover art of current playing song on spotify on an e-paper display.
-Leverage the spotify to leverage the information about current playing song and convert it into a beautiful art and display it on an e-paper display
+Leverage the spotify api to extract the information about current playing song and convert it into a beautiful art and display it on an e-paper display
 
 <h2>Hardware Used:</h2>
 <ul>
