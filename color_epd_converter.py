@@ -11,7 +11,7 @@ file_extensions = ['jpg', 'jpeg', 'gif', 'png', 'bmp']
 
 
 def convert(image, orientation="portrait", width=480, height=800, crop_image=False, crop_x1=0, crop_y1=0, crop_x2=480,
-            crop_y2=800):
+            crop_y2=800, smart_crop: bool=False):
     try:
         if orientation == "landscape":
             width, height = height, width
@@ -19,23 +19,48 @@ def convert(image, orientation="portrait", width=480, height=800, crop_image=Fal
             raise TypeError("Incorrectly specified orientation. Must be \"landscape\" or \"portrait\".")
         image_size = (width, height)
 
-        if crop_image:
+        if smart_crop:
+            target_height = height
+            target_width = width
+            # Calculate scale to maintain aspect ratio but ensure dimensions are >= target
+            image_ratio = image.width / image.height
+            target_ratio = target_width / target_height
+
+            if image_ratio > target_ratio:
+                # Image is wider than target ratio; scale height to match target height
+                new_height = target_height
+                new_width = int(new_height * image_ratio)
+            else:
+                # Image is taller than target ratio; scale width to match target width
+                new_width = target_width
+                new_height = int(new_width / image_ratio)
+
+            image = image.resize((new_width, new_height), Image.LANCZOS)
+
+            # Calculate coordinates to crop the center
+            left = (new_width - target_width) // 2
+            top = (new_height - target_height) // 2
+            right = left + target_width
+            bottom = top + target_height
+
+            image = image.crop((left, top, right, bottom))
+        elif crop_image:
             image = image.crop([crop_x1, crop_y1, crop_x2, crop_y2])
 
         image = image.resize(image_size, resample=Image.Resampling.LANCZOS)
 
-        # palette = [0, 0, 0,  # black
-        #            255, 255, 255,  # white
-        #            0, 255, 0,  # green
-        #            0, 0, 255,  # blue
-        #            255, 0, 0,  # red
-        #            255, 255, 0,  # yellow
-        #            255, 128, 0]  # orange
+        palette = [0, 0, 0,  # black
+                   255, 255, 255,  # white
+                   0, 255, 0,  # green
+                   0, 0, 255,  # blue
+                   255, 0, 0,  # red
+                   255, 255, 0,  # yellow
+                   255, 128, 0]  # orange
 
-        # seven_color_palette = Image.new("P", image_size)
-        # seven_color_palette.putpalette(palette)
-        # image = image.quantize(palette=seven_color_palette, dither=Image.Dither.FLOYDSTEINBERG)
-        # image = image.convert(colors=24)
+        seven_color_palette = Image.new("P", image_size)
+        seven_color_palette.putpalette(palette)
+        image = image.quantize(palette=seven_color_palette, dither=Image.Dither.FLOYDSTEINBERG)
+        image = image.convert(colors=24)
 
         return image
     except IOError as err:

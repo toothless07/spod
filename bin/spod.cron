@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Set working directory
+cd ~/spodis || exit 1
+
+# Activate virtual environment
+source ~/spodis/myvenv/bin/activate
+
+# Export environment variables
+export SPOTIPY_CLIENT_ID="52bdcb3b3ff643e88f56a766ef4f37cf"
+export SPOTIPY_CLIENT_SECRET="7f983b4b715b45eebd2d4a3282c3cb09"
+export SPOTIPY_REDIRECT_URI="https://www.google.com/"
+
+# Run Python script
+python3 ~/spodis/spod_refresh.py
