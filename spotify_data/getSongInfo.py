@@ -9,7 +9,7 @@ from PIL import Image
 
 def getSongInfo():
   scope = 'user-read-currently-playing'
-  sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope), requests_timeout=60)
+  sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope, open_browser=True), requests_timeout=60)
   result = sp.current_user_playing_track()
 
   if result is None:

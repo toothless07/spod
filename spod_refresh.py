@@ -165,7 +165,7 @@ class Spod:
                     self.picture_sync_spod = False
                 else:
                     self.picture_sync_spod = True
-                time.sleep(60)
+                time.sleep(30)
             else:
                 print("Time is outside the range.")
                 if self.picture_sync():
