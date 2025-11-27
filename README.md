@@ -15,9 +15,9 @@ Leverage the spotify api to extract the information about current playing song a
 <li>use Raspberry Pi since the hat is easily available</li>
 <li>Enable SPI interface</li>
   for raspberry pi
-  ```bash
-  sudo raspi-config
-  ```
+```bash
+sudo raspi-config
+```
   go to Interface Options -> SPI -> Enable
 <li>well supported libraries</li>
 </ul>
