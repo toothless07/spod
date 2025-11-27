@@ -13,6 +13,12 @@ Leverage the spotify api to extract the information about current playing song a
 <ul>
 <li>Starter code for any board and display can be found under examples of github repo (https://github.com/waveshareteam/e-Paper)</li>
 <li>use Raspberry Pi since the hat is easily available</li>
+<li>Enable SPI interface</li>
+  for raspberry pi
+  ```bash
+  sudo raspi-config
+  ```
+  go to Interface Options -> SPI -> Enable
 <li>well supported libraries</li>
 </ul>
 
